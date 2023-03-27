@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +30,12 @@ public class TutorialController {
 
   @Autowired
   TutorialRepository tutorialRepository;
+  Logger logger=LoggerFactory.getLogger(TutorialController.class);
 
   @GetMapping("/tutorials")
   public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
     try {
+      logger.info("[getMessage] info message getAllTutorials");
       List<Tutorial> tutorials = new ArrayList<Tutorial>();
 
       if (title == null)
@@ -52,6 +56,7 @@ public class TutorialController {
   @GetMapping("/tutorials/{id}")
   public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") String id) {
     Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
+    logger.info("[getMessage] info message getTutorialById");
 
     if (tutorialData.isPresent()) {
       return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
@@ -63,6 +68,7 @@ public class TutorialController {
   @PostMapping("/tutorials")
   public ResponseEntity<Tutorial> createTutorial(@RequestBody Tutorial tutorial) {
     try {
+      logger.info("[getMessage] info message createTutorial");
       Tutorial _tutorial = tutorialRepository.save(new Tutorial(tutorial.getTitle(), tutorial.getDescription(), false));
       return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
     } catch (Exception e) {
@@ -73,7 +79,7 @@ public class TutorialController {
   @PutMapping("/tutorials/{id}")
   public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") String id, @RequestBody Tutorial tutorial) {
     Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
-
+    logger.info("[getMessage] info message updateTutorial");
     if (tutorialData.isPresent()) {
       Tutorial _tutorial = tutorialData.get();
       _tutorial.setTitle(tutorial.getTitle());
@@ -88,6 +94,8 @@ public class TutorialController {
   @DeleteMapping("/tutorials/{id}")
   public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") String id) {
     try {
+      logger.info("[getMessage] info message deleteTutorial");
+
       tutorialRepository.deleteById(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
@@ -98,6 +106,8 @@ public class TutorialController {
   @DeleteMapping("/tutorials")
   public ResponseEntity<HttpStatus> deleteAllTutorials() {
     try {
+      logger.info("[getMessage] info message deleteAllTutorials");
+
       tutorialRepository.deleteAll();
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
@@ -109,6 +119,7 @@ public class TutorialController {
   public ResponseEntity<List<Tutorial>> findByPublished() {
     try {
       List<Tutorial> tutorials = tutorialRepository.findByPublished(true);
+      logger.info("[getMessage] info message findByPublished");
 
       if (tutorials.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
