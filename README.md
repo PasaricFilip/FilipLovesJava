@@ -1,44 +1,64 @@
 # Spring Boot MongoDB CRUD example - Restful CRUD API
 
-For more detail, please visit:
-> [Spring Boot with MongoDB CRUD example using Spring Data](https://www.bezkoder.com/spring-boot-mongodb-crud/)
+package com.bezkoder.spring.data.mongodb.controller;
 
-More Practice:
-> [Spring Boot MongoDB Pagination & Filter example](https://www.bezkoder.com/spring-boot-mongodb-pagination/)
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-> [Spring Boot + GraphQL + MongoDB example](https://www.bezkoder.com/spring-boot-graphql-mongodb-example-graphql-java/)
+import java.util.List;
 
-Exception Handling:
-> [Spring Boot @ControllerAdvice & @ExceptionHandler example](https://www.bezkoder.com/spring-boot-controlleradvice-exceptionhandler/)
+import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 
-> [@RestControllerAdvice example in Spring Boot](https://www.bezkoder.com/spring-boot-restcontrolleradvice/)
+import com.bezkoder.spring.data.mongodb.model.Tutorial;
 
-Security:
-> [Spring Boot: JWT Authentication & Authorization with MongoDB](https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/)
+public class TutorialControllerTest {
+    @Test
+    void testOnePlusOne() {
+        
+        //write code that tests if 1 plus 1 is equal to 2
+        int result = 1 + 1;
+        assertEquals(2, result);
+    
+    }
+    @Test
+    void testCreateObject() {
+        //write code that tests if you can create an object of type Tutorial
+        Tutorial tutorial = new Tutorial();
+        assertEquals(Tutorial.class, tutorial.getClass());
+    }
+    @Test
+    void testGetAllTutorials() {
+        //write code that tests if you can get all tutorials
+        TutorialController tutorialController = new TutorialController();
+        ResponseEntity<List<Tutorial>> tutorials = tutorialController.getAllTutorials(null);
+        assertEquals(200, tutorials.getStatusCodeValue());
+    }
+    @Test
+    void testGetTutorialById() {
+        //write code that tests if you can get a tutorial by id
+        TutorialController tutorialController = new TutorialController();
+        ResponseEntity<Tutorial> tutorial = tutorialController.getTutorialById("1");
+        assertEquals(200, tutorial.getStatusCodeValue());
+    }
+    @Test
+    void testCreateTutorial() {
+        //write code that tests if you can create a tutorial
+        TutorialController tutorialController = new TutorialController();
+        Tutorial tutorial = new Tutorial();
+        ResponseEntity<Tutorial> tutorialResponse = tutorialController.createTutorial(tutorial);
+        assertEquals(201, tutorialResponse.getStatusCodeValue());
+    }
+    @Test
+    void testUpdateTutorial() {
+        //write code that tests if you can update a tutorial
+        TutorialController tutorialController = new TutorialController();
+        Tutorial tutorial = new Tutorial();
+        ResponseEntity<Tutorial> tutorialResponse = tutorialController.updateTutorial("1", tutorial);
+        assertEquals(200, tutorialResponse.getStatusCodeValue());
+    }
 
-Fullstack:
-> [Angular 8 + Spring Boot + MongoDB](https://www.bezkoder.com/angular-spring-boot-mongodb/)
+}
 
-> [Angular 10 + Spring Boot + MongoDB](https://www.bezkoder.com/angular-10-spring-boot-mongodb/)
-
-> [Angular 11 + Spring Boot + MongoDB](https://www.bezkoder.com/angular-11-spring-boot-mongodb/)
-
-> [Angular 12 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-12-spring-boot-mongodb/)
-
-> [Angular 13 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-13-spring-boot-mongodb/)
-
-> [Angular 14 + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-angular-14-mongodb/)
-
-> [Vue + Spring Boot + MongoDB](https://www.bezkoder.com/spring-boot-vue-mongodb/)
-
-> [React + Spring Boot + MongoDB](https://www.bezkoder.com/react-spring-boot-mongodb/)
-
-Run both Back-end & Front-end in one place:
-> [Integrate Angular with Spring Boot Rest API](https://www.bezkoder.com/integrate-angular-spring-boot/)
-
-> [Integrate React.js with Spring Boot Rest API](https://www.bezkoder.com/integrate-reactjs-spring-boot/)
-
-> [Integrate Vue.js with Spring Boot Rest API](https://www.bezkoder.com/integrate-vue-spring-boot/)
 
 ## Run Spring Boot application
 ```
